@@ -18,6 +18,7 @@ import { SettingSync } from '@/components/shell/SettingSync';
 import { ListSync } from '@/components/shell/ListSync';
 import { UploadBusy } from '@/components/shell/UploadBusy';
 import { SpellCheck } from '@/components/shell/SpellCheck';
+import { CharacterWidget } from '@/components/shell/CharacterWidget';
 import { PageFrame } from '@/lib/pageRefresh';
 import { MenuGuard } from '@/components/shell/MenuGuard';
 import { ServerBoot } from '@/components/shell/ServerBoot';
@@ -98,6 +99,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <UploadBusy />
                   {/* 맞춤법 검사 밑줄 숨김 — 디자인 탭 (v2.0) */}
                   <SpellCheck />
+                  {/* 캐릭터 말풍선 위젯 — 설정은 components/shell/CharacterWidget.tsx 맨 위 */}
+                  <CharacterWidget />
                   </SetupGate>
                 </BgmStoreProvider>
               </MainStoreProvider>
