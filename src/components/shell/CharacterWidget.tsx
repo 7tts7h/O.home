@@ -21,15 +21,16 @@ const LINES = ['같○l', '인테己løł를', 'ぁĦ봐요', '🩶', '🩵'];
 const RANDOM = false;          // true 로 바꾸면 순서 없이 무작위로 나옵니다
 const MAX = 3;                 // 화면에 동시에 보이는 말풍선 수
 const HOME_ONLY = false;       // true 로 바꾸면 메인 화면에서만 보입니다
-const SHOW_ON_MOBILE = true;   // false 로 바꾸면 모바일에서는 숨깁니다
+const SHOW_ON_MOBILE = false;   // false: 모바일(화면 폭 768px 이하)에서는 숨김 · true: 모바일에서도 보임
 
-const SIZE = 120;              // 캐릭터 가로 크기 (px)
+const SIZE = 200;              // 캐릭터 가로 크기 (px)
 const BUBBLE_WIDTH = 180;      // 말풍선 최대 너비 (px)
 const FONT_SIZE = 14;          // 말풍선 글자 크기 (px)
 const AREA = 210;              // 말풍선이 쌓이는 높이 (px) — 말풍선이 잘리면 키우세요
 const ALIGN: 'center' | 'right' | 'left' = 'center'; // 가로 위치: 'center'(가운데) · 'right'(오른쪽) · 'left'(왼쪽)
 const SIDE = 60;              // 오른쪽·왼쪽 정렬일 때 화면 끝에서 떨어진 거리 (px) — 가운데면 쓰이지 않음
-const BOTTOM = '32vh';            // 화면 아래에서 떨어진 거리 — '32vh'(화면 높이의 32%) 또는 '400px'. 숫자가 클수록 위로 올라감
+const FEET_Y = 1000;            // 캐릭터 발 끝의 위치 — 화면 맨 위에서 아래로 몇 px인지. 클수록 아래로 내려감 (말풍선이 위쪽 이미지와 겹치면 키우세요)
+const MIN_BOTTOM = 40;         // 화면이 낮아도 캐릭터가 화면 아래에서 이만큼은 떨어지게 (px)
 const RADIUS = 18;             // 말풍선 모서리 둥글기 (px)
 const SPEED = 0.32;            // 말풍선 움직임 속도 (초)
 
@@ -144,7 +145,7 @@ export function CharacterWidget() {
     '--bubw': `${BUBBLE_WIDTH}px`,
     '--font': `${FONT_SIZE}px`,
     '--area': `${AREA}px`,
-    '--bottom': BOTTOM,
+    '--bottom': `max(${MIN_BOTTOM}px, calc(100vh - ${FEET_Y}px))`,
     '--radius': `${RADIUS}px`,
     '--spd': `${SPEED}s`,
     '--bubble': BUBBLE_COLOR,
