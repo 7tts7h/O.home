@@ -20,7 +20,7 @@ const LINES = ['같○l', '인테己løł를', 'ぁĦ봐요', '🩶', '🩵'];
 
 const RANDOM = false;          // true 로 바꾸면 순서 없이 무작위로 나옵니다
 const MAX = 3;                 // 화면에 동시에 보이는 말풍선 수
-const HOME_ONLY = false;       // true 로 바꾸면 메인 화면에서만 보입니다
+const HOME_ONLY = true;       // true: 메인 화면에서만 보임 · false: 모든 화면에서 보임
 const SHOW_ON_MOBILE = false;   // false: 모바일(화면 폭 768px 이하)에서는 숨김 · true: 모바일에서도 보임
 
 const SIZE = 200;              // 캐릭터 가로 크기 (px)
@@ -115,6 +115,11 @@ export function CharacterWidget() {
   }, [bubbles]);
 
   useEffect(() => () => { timers.current.forEach(t => window.clearTimeout(t)); }, []);
+
+  // 메인이 아닌 화면으로 가면 떠 있던 말풍선을 비워서, 돌아왔을 때 새로 시작하게 함
+  useEffect(() => {
+    if (HOME_ONLY && pathname !== '/') setBubbles([]);
+  }, [pathname]);
 
   if (LINES.length === 0) return null;
   if (HOME_ONLY && pathname !== '/') return null;
