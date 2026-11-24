@@ -27,8 +27,9 @@ const SIZE = 120;              // 캐릭터 가로 크기 (px)
 const BUBBLE_WIDTH = 180;      // 말풍선 최대 너비 (px)
 const FONT_SIZE = 14;          // 말풍선 글자 크기 (px)
 const AREA = 210;              // 말풍선이 쌓이는 높이 (px) — 말풍선이 잘리면 키우세요
-const RIGHT = 60;              // 화면 오른쪽에서 떨어진 거리 (px)
-const BOTTOM = 100;            // 화면 아래에서 떨어진 거리 (px) — 아래 BGM 플레이어와 겹치지 않게 100 이상 권장
+const ALIGN: 'center' | 'right' | 'left' = 'center'; // 가로 위치: 'center'(가운데) · 'right'(오른쪽) · 'left'(왼쪽)
+const SIDE = 60;              // 오른쪽·왼쪽 정렬일 때 화면 끝에서 떨어진 거리 (px) — 가운데면 쓰이지 않음
+const BOTTOM = '32vh';            // 화면 아래에서 떨어진 거리 — '32vh'(화면 높이의 32%) 또는 '400px'. 숫자가 클수록 위로 올라감
 const RADIUS = 18;             // 말풍선 모서리 둥글기 (px)
 const SPEED = 0.32;            // 말풍선 움직임 속도 (초)
 
@@ -133,13 +134,17 @@ export function CharacterWidget() {
   };
 
   const live = bubbles.filter(b => !b.out);
+  const place: CSSProperties =
+    ALIGN === 'center' ? { left: '50%', right: 'auto', transform: 'translateX(-50%)' }
+    : ALIGN === 'left' ? { left: SIDE, right: 'auto' }
+    : { right: SIDE };
   const vars = {
+    ...place,
     '--char': `${SIZE}px`,
     '--bubw': `${BUBBLE_WIDTH}px`,
     '--font': `${FONT_SIZE}px`,
     '--area': `${AREA}px`,
-    '--right': `${RIGHT}px`,
-    '--bottom': `${BOTTOM}px`,
+    '--bottom': BOTTOM,
     '--radius': `${RADIUS}px`,
     '--spd': `${SPEED}s`,
     '--bubble': BUBBLE_COLOR,
